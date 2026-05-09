@@ -795,9 +795,110 @@ section{padding:80px 0}
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
+/* ═══════════════════════ SPLASH SCREEN ═══════════════════════ */
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:var(--sage);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:splash-out .5s ease-in 1.9s forwards;
+  /* Texture sutil rural */
+  background-image:
+    radial-gradient(circle at 30% 20%,rgba(255,255,255,.05) 0%,transparent 40%),
+    radial-gradient(circle at 70% 80%,rgba(0,0,0,.10) 0%,transparent 50%);
+}
+@keyframes splash-out{
+  0%{opacity:1;visibility:visible}
+  99%{opacity:0;visibility:visible}
+  100%{opacity:0;visibility:hidden;display:none}
+}
+
+#splash-stage{
+  position:relative;
+  width:min(280px,55vw);
+  aspect-ratio:1;
+  /* Heartbeat aplicado al stage entero al final */
+  animation:logo-heartbeat 1.0s ease-out 1.4s;
+}
+
+#splash-stage img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
+/* Logo principal: revela con clip-path circular desde el centro del cuerno */
+#splash-logo{
+  /* Empieza invisible, va revelándose desde el "corazón del toro" */
+  clip-path:circle(0% at 38% 42%);
+  animation:reveal-from-heart 1.4s cubic-bezier(.65,0,.35,1) .15s forwards;
+  z-index:2;
+}
+
+@keyframes reveal-from-heart{
+  0%   {clip-path:circle(0% at 38% 42%)}
+  60%  {clip-path:circle(75% at 38% 42%)}
+  100% {clip-path:circle(140% at 38% 42%)}
+}
+
+/* Glow overlay: misma imagen con drop-shadow amber pulsante */
+#splash-glow{
+  z-index:1;
+  opacity:0;
+  filter:drop-shadow(0 0 0 rgba(245,201,122,0));
+  animation:logo-glow 1.4s ease-out 1.4s;
+}
+
+@keyframes logo-glow{
+  0%,100%{
+    opacity:0;
+    filter:drop-shadow(0 0 0 rgba(245,201,122,0));
+  }
+  30%{
+    opacity:.6;
+    filter:drop-shadow(0 0 24px rgba(245,201,122,.95)) drop-shadow(0 0 48px rgba(245,201,122,.5));
+  }
+  60%{
+    opacity:.3;
+    filter:drop-shadow(0 0 16px rgba(245,201,122,.6));
+  }
+}
+
+/* Heartbeat del logo entero */
+@keyframes logo-heartbeat{
+  0%   {transform:scale(1)}
+  18%  {transform:scale(1.10)}
+  36%  {transform:scale(.96)}
+  54%  {transform:scale(1.05)}
+  72%  {transform:scale(.99)}
+  100% {transform:scale(1)}
+}
+
+/* Reduced motion: skip animation */
+@media (prefers-reduced-motion: reduce){
+  #splash{animation:splash-out .3s ease 0s forwards}
+  #splash-stage,#splash-logo,#splash-glow{animation:none !important}
+  #splash-logo{clip-path:none}
+  #splash-glow{display:none}
+}
+
 </style>
 </head>
 <body>
+
+<!-- ═══════════════════════ SPLASH SCREEN ═══════════════════════ -->
+<div id="splash" aria-hidden="true">
+  <div id="splash-stage">
+    <img id="splash-logo" src="logo-ganaderoia-white.png" alt="">
+    <img id="splash-glow" src="logo-ganaderoia-white.png" alt="" aria-hidden="true">
+  </div>
+</div>
 
 <!-- ═══════════════════════ NAV ═══════════════════════ -->
 <nav class="nav">
@@ -1305,6 +1406,34 @@ section{padding:80px 0}
 </footer>
 
 <script>
+// ═══════════════════════ SPLASH SCREEN ═══════════════════════
+(function(){
+  var splash = document.getElementById('splash');
+  if (!splash) return;
+
+  // Bloquea scroll mientras dura el splash
+  document.documentElement.style.overflow = 'hidden';
+
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DURATION = REDUCED ? 350 : 2500;
+
+  setTimeout(function(){
+    splash.parentNode && splash.parentNode.removeChild(splash);
+    document.documentElement.style.overflow = '';
+  }, DURATION);
+
+  // Skip si el usuario hace click/touch (UX flexible)
+  splash.addEventListener('click', function(){
+    splash.style.transition = 'opacity .25s ease';
+    splash.style.opacity = '0';
+    setTimeout(function(){
+      splash.parentNode && splash.parentNode.removeChild(splash);
+      document.documentElement.style.overflow = '';
+    }, 250);
+  }, { once: true });
+  splash.style.pointerEvents = 'auto';
+})();
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
