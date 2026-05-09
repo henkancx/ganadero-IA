@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2C2416">
+<title>GanaderoAI — Smarter Livestock. Stronger Farms.</title>
+<meta name="description" content="Plataforma inteligente de gestión ganadera. Registra gastos por chat, sube fotos de facturas, controla múltiples fincas y descubre en tiempo real dónde se te escapa la rentabilidad.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="logo-ganaderoia.svg">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="GanaderoAI — Smarter Livestock. Stronger Farms.">
+<meta property="og:description" content="Plataforma inteligente de gestión ganadera. Registra por chat, controla múltiples fincas y descubre en tiempo real dónde se escapa la rentabilidad.">
+<meta property="og:url" content="https://ganaderoai.com">
+<meta property="og:site_name" content="GanaderoAI">
+<meta property="og:locale" content="es_LA">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GanaderoAI — Smarter Livestock. Stronger Farms.">
+<meta name="twitter:description" content="Tu finca al día. Sin papel, sin Excel, sin pretextos.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Inter como sustituto libre de Neue Haas Grotesk Display + Source Sans 3 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════ RESET ═══════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+img,svg{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+/* ═══════════════════════ BRAND TOKENS (oficiales) ═══════════════════════ */
+:root{
+  /* Paleta oficial GanaderoAI */
+  --sage:#6B7D5A;          /* Sage Field */
+  --soil:#2C2416;          /* Soil Dark */
+  --cloud:#EEF0EB;         /* Cloud */
+  --blue:#3A68A4;          /* Digital Blue */
+  --amber:#BF7A2A;         /* Harvest Amber */
+
+  /* Derivados (usar con moderación) */
+  --sage-light:#E8EDE3;
+  --sage-deep:#566649;
+  --soil-soft:#4A3F2D;
+  --cream:#FAF8F1;
+  --paper:#FFFFFF;
+  --ink:#1A1410;
+
+  /* Estado */
+  --ok:#3A7D44;
+  --warn:#BF7A2A;
+  --crit:#B83232;
+
+  /* Sistema */
+  --border:#D8DBD2;
+  --border-strong:#A8AFA0;
+  --text:#2C2416;
+  --text-2:#4A5240;
+  --text-3:#7A816F;
+
+  /* Tipografía oficial */
+  --display:'Inter','Neue Haas Grotesk Display Pro',-apple-system,sans-serif;
+  --body:'Source Sans 3',-apple-system,sans-serif;
+
+  /* Radios sobrios */
+  --r-xs:2px;
+  --r-sm:4px;
+  --r:6px;
+  --r-lg:10px;
+}
+
+html,body{
+  background:var(--cream);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+
+/* ═══════════════════════ TIPO ═══════════════════════ */
+h1,h2,h3,h4,h5,h6{
+  font-family:var(--display);
+  font-weight:700;
+  letter-spacing:-.02em;
+  color:var(--soil);
+  line-height:1.1;
+}
+
+.eyebrow{
+  font-family:var(--body);
+  font-size:12px;font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--sage-deep);
+}
+
+/* ═══════════════════════ LAYOUT ═══════════════════════ */
+.container{
+  width:100%;max-width:1240px;margin:0 auto;
+  padding:0 24px;
+}
+@media (min-width:768px){.container{padding:0 40px}}
+
+section{padding:80px 0}
+@media (min-width:768px){section{padding:112px 0}}
+
+.hr-rule{
+  height:1px;background:var(--border);
+  margin:0 24px;
+}
+@media (min-width:768px){.hr-rule{margin:0 40px}}
+
+/* ═══════════════════════ NAV ═══════════════════════ */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,248,241,.92);
+  backdrop-filter:saturate(180%) blur(16px);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:72px;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--display);font-weight:700;font-size:18px;
+  color:var(--soil);letter-spacing:-.01em;
+}
+.nav-logo svg{width:34px;height:34px;color:var(--soil)}
+.nav-links{
+  display:none;gap:36px;
+  font-family:var(--display);font-weight:500;font-size:14px;
+}
+@media (min-width:960px){.nav-links{display:flex}}
+.nav-links a{color:var(--text-2);transition:color .15s}
+.nav-links a:hover{color:var(--soil)}
+
+/* ═══════════════════════ BOTONES ═══════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--display);font-weight:600;font-size:14px;
+  letter-spacing:.01em;
+  padding:13px 22px;
+  border-radius:var(--r-sm);
+  border:1.5px solid transparent;
+  cursor:pointer;
+  transition:transform .12s ease,background .15s ease,border-color .15s ease;
+  text-transform:none;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px)}
+
+.btn-primary{
+  background:var(--amber);color:#fff;
+}
+.btn-primary:hover{background:#A86A24}
+
+.btn-dark{
+  background:var(--soil);color:var(--cream);
+}
+.btn-dark:hover{background:var(--ink)}
+
+.btn-ghost{
+  background:transparent;color:var(--soil);
+  border-color:var(--border-strong);
+}
+.btn-ghost:hover{background:var(--cloud);border-color:var(--soil)}
+
+.btn-link{
+  background:transparent;color:var(--soil);
+  padding:13px 4px;
+  border-bottom:1.5px solid var(--soil);
+  border-radius:0;
+}
+.btn-link:hover{color:var(--amber);border-bottom-color:var(--amber)}
+
+.btn-arrow{
+  display:inline-block;transition:transform .15s ease;
+}
+.btn:hover .btn-arrow{transform:translateX(3px)}
+
+.btn-sm{padding:9px 16px;font-size:13px}
+
+/* ═══════════════════════ HERO ═══════════════════════ */
+.hero{
+  padding-top:72px;padding-bottom:80px;
+}
+@media (min-width:1024px){
+  .hero{padding-top:96px;padding-bottom:112px}
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:56px;
+  align-items:center;
+}
+@media (min-width:1024px){
+  .hero-grid{grid-template-columns:1.05fr .95fr;gap:80px}
+}
+
+.hero-meta{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:24px;
+  font-family:var(--display);font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sage-deep);
+}
+.hero-meta-line{
+  flex:0 0 28px;height:1.5px;background:var(--sage);
+}
+
+.hero h1{
+  font-size:clamp(40px,6.4vw,72px);
+  line-height:1;
+  letter-spacing:-.028em;
+  font-weight:800;
+  color:var(--soil);
+  margin-bottom:18px;
+}
+.hero-tagline{
+  font-family:var(--display);
+  font-weight:600;
+  font-size:clamp(18px,2vw,22px);
+  color:var(--blue);
+  letter-spacing:-.01em;
+  margin-bottom:24px;
+}
+.hero p.lead{
+  font-size:clamp(16px,1.6vw,19px);
+  color:var(--text-2);
+  max-width:540px;
+  margin-bottom:36px;
+  line-height:1.55;
+}
+
+.hero-ctas{
+  display:flex;flex-wrap:wrap;gap:12px;
+  margin-bottom:48px;
+}
+
+.hero-trust{
+  display:flex;flex-wrap:wrap;gap:16px 28px;
+  padding-top:28px;
+  border-top:1px solid var(--border);
+  font-family:var(--display);font-size:13px;color:var(--text-2);
+  font-weight:500;
+}
+.hero-trust span{display:flex;align-items:center;gap:8px}
+.hero-trust svg{width:14px;height:14px;color:var(--sage)}
+
+/* ─── Phone mockup (sin floating cards) ─── */
+.phone-wrap{
+  display:flex;justify-content:center;align-items:center;
+  position:relative;
+}
+.phone{
+  width:300px;height:610px;
+  background:#1a1a1a;
+  border-radius:46px;
+  padding:10px;
+  box-shadow:
+    0 0 0 1.5px rgba(0,0,0,.5),
+    0 30px 60px -20px rgba(44,36,22,.30),
+    0 80px 120px -40px rgba(44,36,22,.18);
+  position:relative;
+}
+.phone::before{
+  content:"";position:absolute;top:18px;left:50%;
+  transform:translateX(-50%);
+  width:90px;height:24px;
+  background:#000;border-radius:14px;z-index:5;
+}
+.phone-screen{
+  width:100%;height:100%;
+  background:var(--cloud);
+  border-radius:36px;
+  overflow:hidden;
+  position:relative;
+  display:flex;flex-direction:column;
+}
+.ps-statusbar{
+  height:42px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 24px 6px;
+  font-family:var(--display);font-size:12px;font-weight:600;
+  color:var(--soil);
+}
+.ps-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 16px 12px;
+  background:var(--paper);
+  border-bottom:1px solid var(--border);
+}
+.ps-topbar-logo{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--display);font-weight:700;font-size:14px;color:var(--soil);
+  letter-spacing:-.01em;
+}
+.ps-topbar-logo svg{width:22px;height:22px}
+.ps-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--sage);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--display);font-weight:700;font-size:12px;
+}
+.ps-content{flex:1;overflow:hidden;padding:14px 12px 0;background:var(--cloud)}
+
+.ps-kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ps-kpi{
+  background:var(--paper);
+  border-radius:var(--r-sm);
+  padding:10px 12px;
+  border-top:3px solid var(--sage);
+}
+.ps-kpi.amber{border-top-color:var(--amber)}
+.ps-kpi.green{border-top-color:var(--ok)}
+.ps-kpi.red{border-top-color:var(--crit)}
+.ps-kpi-label{font-family:var(--display);font-size:9px;font-weight:600;text-transform:uppercase;color:var(--text-3);letter-spacing:.06em}
+.ps-kpi-value{font-family:var(--display);font-size:22px;font-weight:800;color:var(--soil);line-height:1.05;margin-top:3px;letter-spacing:-.02em}
+.ps-kpi-sub{font-size:10px;color:var(--text-3);margin-top:2px}
+
+.ps-section-label{
+  font-family:var(--display);font-size:10px;font-weight:600;
+  text-transform:uppercase;color:var(--text-3);
+  letter-spacing:.08em;margin:14px 0 8px;
+}
+.ps-fincas{
+  display:flex;gap:8px;
+  overflow-x:auto;
+  padding-bottom:6px;
+  margin:0 -12px;
+  padding-left:12px;padding-right:12px;
+  scrollbar-width:none;
+}
+.ps-fincas::-webkit-scrollbar{display:none}
+.ps-finca{
+  flex:0 0 90px;
+  background:var(--paper);
+  border-radius:var(--r-sm);
+  padding:10px;
+  border-left:3px solid var(--sage);
+}
+.ps-finca.alert{border-left-color:var(--amber)}
+.ps-finca.crit{border-left-color:var(--crit)}
+.ps-finca-name{font-family:var(--display);font-size:11px;font-weight:700;color:var(--soil)}
+.ps-finca-stat{font-family:var(--display);font-size:20px;font-weight:800;color:var(--soil);line-height:1;margin-top:6px;letter-spacing:-.02em}
+.ps-finca-lbl{font-size:9px;color:var(--text-3)}
+.ps-finca-margin{font-family:var(--display);font-size:10px;font-weight:700;margin-top:4px;color:var(--ok)}
+.ps-finca.alert .ps-finca-margin{color:var(--amber)}
+.ps-finca.crit .ps-finca-margin{color:var(--crit)}
+
+.ps-nav{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  background:var(--paper);
+  border-top:1px solid var(--border);
+  padding:8px 0 16px;
+}
+.ps-nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-family:var(--display);font-size:9px;font-weight:600;color:var(--text-3);
+}
+.ps-nav-item.active{color:var(--sage-deep)}
+.ps-nav-icon{font-size:18px}
+
+/* ═══════════════════════ DATA STRIP ═══════════════════════ */
+.strip{
+  background:var(--soil);color:var(--cloud);
+  padding:32px 0;
+  font-family:var(--display);
+}
+.strip-inner{
+  display:grid;grid-template-columns:1fr;gap:24px;
+  align-items:center;
+}
+@media (min-width:768px){.strip-inner{grid-template-columns:auto 1fr;gap:48px}}
+.strip-tagline{
+  font-size:14px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#D9B884;
+}
+.strip-stats{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+}
+@media (min-width:640px){.strip-stats{grid-template-columns:repeat(4,1fr)}}
+.strip-stat{
+  border-left:2px solid rgba(217,184,132,.4);
+  padding-left:14px;
+}
+.strip-num{
+  font-family:var(--display);font-size:28px;font-weight:800;
+  color:var(--cream);letter-spacing:-.02em;line-height:1;
+}
+.strip-lbl{
+  font-size:11px;color:rgba(238,240,235,.6);
+  text-transform:uppercase;letter-spacing:.08em;margin-top:4px;
+  font-weight:500;
+}
+
+/* ═══════════════════════ DOLOR ═══════════════════════ */
+.pain{background:var(--paper)}
+.pain-header{max-width:760px;margin-bottom:64px}
+.pain h2{
+  font-size:clamp(32px,4.6vw,52px);
+  margin:14px 0 18px;
+  font-weight:800;
+}
+.pain-lead{font-size:18px;color:var(--text-2);max-width:620px;line-height:1.55}
+
+.pain-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  border-top:1px solid var(--border);
+}
+@media (min-width:768px){
+  .pain-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+.pain-card{
+  padding:36px 28px 36px 0;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+@media (min-width:768px){
+  .pain-card{
+    padding:40px 32px;
+    border-right:1px solid var(--border);
+    border-bottom:none;
+  }
+  .pain-card:last-child{border-right:none}
+  .pain-card:first-child{padding-left:0}
+}
+
+.pain-num{
+  font-family:var(--display);
+  font-size:13px;font-weight:700;
+  color:var(--amber);
+  letter-spacing:.08em;
+  margin-bottom:18px;
+}
+.pain-card h3{
+  font-size:22px;line-height:1.15;font-weight:700;
+  margin-bottom:12px;
+}
+.pain-card p{color:var(--text-2);font-size:15px;line-height:1.55}
+
+/* ═══════════════════════ PRODUCTO ═══════════════════════ */
+.product{background:var(--cream)}
+.product-header{max-width:780px;margin:0 0 56px}
+.product-header h2{
+  font-size:clamp(32px,4.6vw,52px);
+  margin:14px 0 18px;
+  font-weight:800;
+}
+.product-header p{font-size:18px;color:var(--text-2);line-height:1.55}
+
+.modules{
+  display:grid;grid-template-columns:1fr;
+  gap:20px;
+}
+@media (min-width:640px){.modules{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.modules{grid-template-columns:repeat(3,1fr);gap:24px}}
+
+.module{
+  background:var(--paper);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:32px 28px;
+  transition:border-color .18s,transform .18s;
+}
+.module:hover{border-color:var(--soil);transform:translateY(-2px)}
+.module-icon{
+  width:44px;height:44px;
+  background:var(--sage-light);color:var(--sage-deep);
+  border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  margin-bottom:20px;
+}
+.module h3{
+  font-size:20px;line-height:1.2;font-weight:700;
+  margin-bottom:10px;
+}
+.module p{color:var(--text-2);font-size:15px;line-height:1.55;margin-bottom:16px}
+.module ul{list-style:none;font-family:var(--body);font-size:14px;color:var(--text-2)}
+.module ul li{padding:5px 0;display:flex;align-items:flex-start;gap:10px}
+.module ul li::before{
+  content:"";width:5px;height:5px;
+  background:var(--sage);border-radius:50%;
+  flex-shrink:0;margin-top:8px;
+}
+
+/* Módulo destacado: Chat IA */
+.module.feature{
+  grid-column:1/-1;
+  background:var(--soil);
+  color:var(--cream);
+  border-color:var(--soil);
+  display:grid;grid-template-columns:1fr;gap:32px;
+  align-items:center;
+  padding:40px 32px;
+}
+@media (min-width:768px){
+  .module.feature{
+    grid-template-columns:1fr 1fr;
+    padding:56px 48px;
+    gap:56px;
+  }
+}
+.module.feature:hover{transform:none;border-color:var(--soil)}
+.module.feature .module-icon{background:var(--amber);color:#fff}
+.module.feature h3{color:var(--cream);font-size:28px;margin-bottom:14px}
+.module.feature p{color:rgba(238,240,235,.75);font-size:16px}
+.module.feature ul{color:rgba(238,240,235,.85)}
+.module.feature ul li::before{background:var(--amber)}
+
+.chat-demo{
+  background:var(--paper);
+  border-radius:var(--r);
+  padding:18px;
+  display:flex;flex-direction:column;gap:10px;
+  min-height:300px;
+}
+.chat-msg{display:flex;gap:8px;align-items:flex-start}
+.chat-avatar{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.chat-avatar.bot{background:var(--soil);color:var(--cream)}
+.chat-avatar.user{background:var(--sage);color:#fff;font-family:var(--display);font-weight:700;font-size:11px}
+.chat-bubble{
+  background:var(--cloud);padding:10px 14px;border-radius:var(--r-sm);
+  font-size:14px;line-height:1.45;color:var(--text);
+  max-width:85%;
+}
+.chat-msg.user{flex-direction:row-reverse}
+.chat-msg.user .chat-bubble{background:var(--sage-light);color:var(--soil)}
+.chat-bubble strong{color:var(--sage-deep);font-weight:700}
+.chat-bubble small{display:block;font-family:var(--display);font-size:11px;color:var(--text-3);margin-top:4px;font-weight:500}
+
+/* ═══════════════════════ DIFERENCIADOR ═══════════════════════ */
+.differ{background:var(--paper);border-top:1px solid var(--border)}
+.differ-grid{
+  display:grid;grid-template-columns:1fr;
+  gap:48px;align-items:start;
+}
+@media (min-width:1024px){.differ-grid{grid-template-columns:.95fr 1.05fr;gap:80px}}
+
+.differ-text h2{
+  font-size:clamp(32px,4.6vw,52px);
+  margin:14px 0 22px;
+  font-weight:800;
+}
+.differ-text p{font-size:17px;color:var(--text-2);margin-bottom:18px;line-height:1.6}
+
+.differ-stats{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;
+  background:var(--border);
+  margin-top:36px;
+  border:1px solid var(--border);
+}
+.stat{
+  background:var(--paper);
+  padding:24px;
+}
+.stat-num{
+  font-family:var(--display);font-weight:800;
+  font-size:40px;color:var(--soil);line-height:1;
+  letter-spacing:-.025em;
+}
+.stat-label{font-family:var(--display);font-size:12px;color:var(--text-2);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-top:8px}
+
+.differ-visual{
+  background:var(--cloud);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:32px 28px;
+}
+.differ-visual h4{
+  font-size:18px;font-weight:700;color:var(--soil);margin-bottom:6px;
+}
+.differ-visual .sub{
+  font-family:var(--display);font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);
+  margin-bottom:24px;
+}
+.bar-row{
+  display:grid;grid-template-columns:80px 1fr 50px;
+  gap:12px;align-items:center;margin-bottom:14px;
+}
+.bar-label{font-family:var(--display);font-size:13px;font-weight:600;color:var(--text-2)}
+.bar-track{height:10px;background:#fff;border:1px solid var(--border);border-radius:0;overflow:hidden}
+.bar-fill{height:100%;background:var(--sage);transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+.bar-fill.amber{background:var(--amber)}
+.bar-fill.red{background:var(--crit)}
+.bar-val{font-family:var(--display);font-size:13px;font-weight:700;color:var(--soil);text-align:right}
+
+.differ-insight{
+  margin-top:22px;padding-top:22px;
+  border-top:1px solid var(--border);
+  font-size:14px;color:var(--text-2);line-height:1.55;
+}
+.differ-insight strong{color:var(--soil);font-weight:700}
+
+/* ═══════════════════════ COMO FUNCIONA ═══════════════════════ */
+.how{background:var(--cream)}
+.how-grid{
+  display:grid;grid-template-columns:1fr;
+  gap:0;margin-top:48px;
+  border-top:1px solid var(--border);
+}
+@media (min-width:768px){
+  .how-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+.step{
+  padding:36px 28px 36px 0;
+  border-bottom:1px solid var(--border);
+}
+@media (min-width:768px){
+  .step{
+    padding:40px 32px;
+    border-right:1px solid var(--border);
+    border-bottom:none;
+  }
+  .step:last-child{border-right:none}
+  .step:first-child{padding-left:0}
+}
+.step-num{
+  font-family:var(--display);
+  font-size:13px;font-weight:700;
+  color:var(--blue);
+  letter-spacing:.08em;
+  margin-bottom:18px;
+}
+.step h3{
+  font-size:22px;line-height:1.15;font-weight:700;
+  margin-bottom:12px;
+}
+.step p{color:var(--text-2);font-size:15px;line-height:1.55}
+
+/* ═══════════════════════ AUDIENCIA ═══════════════════════ */
+.audience{
+  background:var(--soil);color:var(--cream);
+}
+.audience-header{max-width:780px;margin-bottom:48px}
+.audience-header .eyebrow{color:#D9B884}
+.audience-header h2{
+  color:var(--cream);
+  font-size:clamp(32px,4.6vw,52px);
+  margin:14px 0 18px;
+  font-weight:800;
+}
+.audience-header p{color:rgba(238,240,235,.75);font-size:18px;line-height:1.55}
+
+.audience-grid{
+  display:grid;grid-template-columns:1fr;
+  gap:1px;
+  background:rgba(238,240,235,.12);
+  border:1px solid rgba(238,240,235,.12);
+}
+@media (min-width:640px){.audience-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.audience-grid{grid-template-columns:repeat(4,1fr)}}
+
+.aud-card{
+  background:var(--soil);
+  padding:32px 28px;
+  transition:background .2s;
+}
+.aud-card:hover{background:var(--soil-soft)}
+.aud-num{
+  font-family:var(--display);font-size:12px;font-weight:700;
+  color:#D9B884;letter-spacing:.1em;margin-bottom:18px;
+}
+.aud-card h4{
+  font-family:var(--display);font-weight:700;font-size:19px;
+  color:var(--cream);margin-bottom:10px;letter-spacing:-.01em;
+}
+.aud-card p{color:rgba(238,240,235,.65);font-size:14px;line-height:1.55}
+
+/* ═══════════════════════ CTA FINAL ═══════════════════════ */
+.cta{
+  background:var(--cream);
+  border-top:1px solid var(--border);
+}
+.cta-inner{
+  max-width:700px;margin:0 auto;text-align:center;
+}
+.cta h2{
+  font-size:clamp(36px,5vw,60px);
+  margin:14px 0 18px;
+  font-weight:800;
+  line-height:1.05;
+}
+.cta-tagline{
+  font-family:var(--display);
+  font-weight:600;font-size:18px;
+  color:var(--blue);
+  letter-spacing:-.01em;
+  margin-bottom:20px;
+}
+.cta p.lead{font-size:18px;color:var(--text-2);margin-bottom:36px;line-height:1.55}
+
+.cta-form{
+  display:flex;flex-direction:column;gap:8px;
+  max-width:480px;margin:0 auto;
+}
+@media (min-width:560px){.cta-form{flex-direction:row}}
+.cta-input{
+  flex:1;
+  padding:14px 18px;
+  border-radius:var(--r-sm);
+  border:1.5px solid var(--border-strong);
+  background:var(--paper);
+  font-family:var(--body);font-size:15px;
+  color:var(--text);
+  transition:border-color .15s;
+}
+.cta-input:focus{outline:none;border-color:var(--soil)}
+.cta-form .btn{padding:14px 24px}
+.cta-note{
+  margin-top:22px;
+  font-family:var(--display);font-size:13px;color:var(--text-3);
+  font-weight:500;
+}
+.cta-note strong{color:var(--soil)}
+
+/* ═══════════════════════ FOOTER ═══════════════════════ */
+.footer{
+  background:var(--soil);color:rgba(238,240,235,.65);
+  padding:64px 0 28px;
+  font-size:14px;
+}
+.footer-grid{
+  display:grid;grid-template-columns:1fr;
+  gap:40px;margin-bottom:48px;
+}
+@media (min-width:768px){.footer-grid{grid-template-columns:1.5fr 1fr 1fr 1fr}}
+
+.footer-brand{
+  display:flex;align-items:center;gap:12px;
+  color:var(--cream);font-family:var(--display);font-weight:700;font-size:18px;
+  margin-bottom:14px;letter-spacing:-.01em;
+}
+.footer-brand svg{width:34px;height:34px;color:var(--cream)}
+.footer-tagline{
+  font-family:var(--display);font-size:12px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:#D9B884;
+  margin-bottom:14px;
+}
+.footer p{margin-bottom:14px;line-height:1.55;max-width:340px}
+.footer h5{
+  font-family:var(--display);font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--cream);margin-bottom:14px;
+}
+.footer ul{list-style:none}
+.footer ul li{margin-bottom:10px}
+.footer ul a{transition:color .15s}
+.footer ul a:hover{color:var(--cream)}
+
+.footer-bottom{
+  border-top:1px solid rgba(238,240,235,.12);
+  padding-top:24px;
+  display:flex;flex-direction:column;gap:14px;
+  align-items:flex-start;
+  font-family:var(--display);font-size:12px;
+  color:rgba(238,240,235,.45);font-weight:500;
+}
+@media (min-width:768px){
+  .footer-bottom{flex-direction:row;justify-content:space-between;align-items:center}
+}
+.powered{
+  display:inline-flex;align-items:center;gap:6px;
+  letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+}
+.powered a{color:#CB6CE6;transition:opacity .15s}
+.powered a:hover{opacity:.75}
+
+/* ═══════════════════════ REVEAL ═══════════════════════ */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <svg viewBox="0 0 1024 1024" fill="none" aria-hidden="true">
+        <g fill="currentColor">
+          <path d="M 245 230 L 285 230 L 360 415 L 360 380 Z"/>
+          <path d="M 360 230 L 540 230 L 540 540 L 470 540 L 470 600 L 540 600 L 540 690 Q 540 760 470 760 L 420 760 Q 360 760 360 700 Z"/>
+          <path d="M 540 540 Q 590 540 605 510 L 645 470 L 695 580 L 770 360 L 800 305" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="800" cy="305" r="42"/>
+        </g>
+      </svg>
+      GanaderoAI
+    </a>
+    <div class="nav-links">
+      <a href="#producto">Producto</a>
+      <a href="#diferenciador">Por qué</a>
+      <a href="#como">Cómo funciona</a>
+      <a href="#audiencia">Para quién</a>
+    </div>
+    <a href="#demo" class="btn btn-dark btn-sm">Solicitar demo</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <div>
+        <div class="hero-meta">
+          <span class="hero-meta-line"></span>
+          <span>Plataforma de gestión ganadera con IA</span>
+        </div>
+
+        <h1>Tu finca al día.<br>Sin papel,<br>sin Excel,<br>sin pretextos.</h1>
+
+        <div class="hero-tagline">Smarter Livestock. Stronger Farms.</div>
+
+        <p class="lead">
+          GanaderoAI convierte tu chat en el centro de mando del hato. Registra gastos hablando, sube fotos de facturas, controla múltiples fincas y descubre exactamente dónde se te escapa la rentabilidad — antes de que sea tarde.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#demo" class="btn btn-primary">
+            Solicitar demo gratis
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="#producto" class="btn btn-ghost">Ver el producto</a>
+        </div>
+
+        <div class="hero-trust">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Sin instalación
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Funciona offline
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Listo en 1 día
+          </span>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="ps-statusbar">
+              <span>9:41</span>
+              <span>● ▮▮▮ 87%</span>
+            </div>
+            <div class="ps-topbar">
+              <div class="ps-topbar-logo">
+                <svg viewBox="0 0 1024 1024" fill="none" aria-hidden="true">
+                  <g fill="currentColor">
+                    <path d="M 245 230 L 285 230 L 360 415 L 360 380 Z"/>
+                    <path d="M 360 230 L 540 230 L 540 540 L 470 540 L 470 600 L 540 600 L 540 690 Q 540 760 470 760 L 420 760 Q 360 760 360 700 Z"/>
+                    <path d="M 540 540 Q 590 540 605 510 L 645 470 L 695 580 L 770 360 L 800 305" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <circle cx="800" cy="305" r="42"/>
+                  </g>
+                </svg>
+                GanaderoAI
+              </div>
+              <div class="ps-avatar">P</div>
+            </div>
+            <div class="ps-content">
+              <div class="ps-kpi-row">
+                <div class="ps-kpi">
+                  <div class="ps-kpi-label">Animales</div>
+                  <div class="ps-kpi-value">96</div>
+                  <div class="ps-kpi-sub">87 reses · 9 caballos</div>
+                </div>
+                <div class="ps-kpi green">
+                  <div class="ps-kpi-label">Ingresos</div>
+                  <div class="ps-kpi-value">$6.2k</div>
+                  <div class="ps-kpi-sub">↑ rentable</div>
+                </div>
+              </div>
+              <div class="ps-kpi-row">
+                <div class="ps-kpi amber">
+                  <div class="ps-kpi-label">Gastos mes</div>
+                  <div class="ps-kpi-value">$2.8k</div>
+                  <div class="ps-kpi-sub">↑ +8%</div>
+                </div>
+                <div class="ps-kpi red">
+                  <div class="ps-kpi-label">Alertas</div>
+                  <div class="ps-kpi-value">5</div>
+                  <div class="ps-kpi-sub">2 críticas</div>
+                </div>
+              </div>
+
+              <div class="ps-section-label">Mis fincas</div>
+              <div class="ps-fincas">
+                <div class="ps-finca">
+                  <div class="ps-finca-name">El Tecal</div>
+                  <div class="ps-finca-stat">24</div>
+                  <div class="ps-finca-lbl">reses</div>
+                  <div class="ps-finca-margin">78%</div>
+                </div>
+                <div class="ps-finca">
+                  <div class="ps-finca-name">Darién</div>
+                  <div class="ps-finca-stat">19</div>
+                  <div class="ps-finca-lbl">reses</div>
+                  <div class="ps-finca-margin">62%</div>
+                </div>
+                <div class="ps-finca alert">
+                  <div class="ps-finca-name">Tortí</div>
+                  <div class="ps-finca-stat">14</div>
+                  <div class="ps-finca-lbl">reses</div>
+                  <div class="ps-finca-margin">44%</div>
+                </div>
+                <div class="ps-finca crit">
+                  <div class="ps-finca-name">Toño</div>
+                  <div class="ps-finca-stat">14</div>
+                  <div class="ps-finca-lbl">reses</div>
+                  <div class="ps-finca-margin">31%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ps-nav">
+              <div class="ps-nav-item active"><div class="ps-nav-icon">🏠</div>Inicio</div>
+              <div class="ps-nav-item"><div class="ps-nav-icon">💬</div>Chat</div>
+              <div class="ps-nav-item"><div class="ps-nav-icon">🐄</div>Hato</div>
+              <div class="ps-nav-item"><div class="ps-nav-icon">💸</div>Gastos</div>
+              <div class="ps-nav-item"><div class="ps-nav-icon">🔔</div>Alertas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ STRIP DE DATOS ═══════════════════════ -->
+<div class="strip">
+  <div class="container strip-inner">
+    <div class="strip-tagline">Data. Decisions. Performance.</div>
+    <div class="strip-stats">
+      <div class="strip-stat">
+        <div class="strip-num">85%</div>
+        <div class="strip-lbl">menos tiempo en registros</div>
+      </div>
+      <div class="strip-stat">
+        <div class="strip-num">100%</div>
+        <div class="strip-lbl">trazabilidad por finca</div>
+      </div>
+      <div class="strip-stat">
+        <div class="strip-num">5×</div>
+        <div class="strip-lbl">visibilidad de margen</div>
+      </div>
+      <div class="strip-stat">
+        <div class="strip-num">0</div>
+        <div class="strip-lbl">capacitación técnica</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ DOLOR ═══════════════════════ -->
+<section class="pain">
+  <div class="container">
+    <div class="pain-header reveal">
+      <div class="eyebrow">El problema</div>
+      <h2>Tu finca pierde dinero en lugares que no estás viendo.</h2>
+      <p class="pain-lead">No es por mala administración. Es porque la información del campo viaja en libretas, mensajes sueltos y la memoria del capataz. Para cuando los números llegan al escritorio, ya pasó un mes.</p>
+    </div>
+
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-num">01 — El gasto invisible</div>
+        <h3>Vacunas, sales, alimento, jornales.</h3>
+        <p>Todo se paga en efectivo, se anota en una libreta — o no se anota. A fin de mes nadie sabe exactamente cuánto costó cada finca.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-num">02 — Hato sin trazabilidad</div>
+        <h3>La memoria es de una sola persona.</h3>
+        <p>¿Cuándo se vacunó el lote de Toño? ¿Quién pesó las reses de Tortí? ¿Cuánto le faltaba a la #032 para liquidar? Las respuestas viven en la cabeza del capataz.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-num">03 — Rentabilidad oculta</div>
+        <h3>Cinco fincas. Una sola balanza al año.</h3>
+        <p>Cuál te da margen del 78% y cuál apenas el 31% — eso lo sabes seis meses tarde. Suficiente tiempo para que el problema se vuelva crónico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ PRODUCTO ═══════════════════════ -->
+<section class="product" id="producto">
+  <div class="container">
+    <div class="product-header reveal">
+      <div class="eyebrow">El producto</div>
+      <h2>Cinco módulos. Una sola conversación.</h2>
+      <p>GanaderoAI es la primera plataforma de gestión ganadera donde no llenas formularios — le hablas. La IA extrae los datos, los clasifica por finca y mantiene tu hato al día sin que dejes de mover ganado.</p>
+    </div>
+
+    <div class="modules">
+
+      <!-- Módulo destacado: Chat IA -->
+      <div class="module feature reveal">
+        <div>
+          <div class="module-icon">💬</div>
+          <h3>Chat IA: el corazón del sistema</h3>
+          <p>Escribe en lenguaje natural o sube una foto. La IA entiende contexto, extrae datos de facturas (RUC incluido) y registra todo en su finca correcta — sin que toques un solo formulario.</p>
+          <ul>
+            <li>Reconoce productos, dosis, precios y proveedores</li>
+            <li>OCR de facturas con extracción de RUC</li>
+            <li>Vincula automáticamente a la finca correcta</li>
+            <li>Funciona en WhatsApp y en el app</li>
+          </ul>
+        </div>
+        <div class="chat-demo">
+          <div class="chat-msg user">
+            <div class="chat-avatar user">P</div>
+            <div class="chat-bubble">Compré 12 dosis de vacuna ántrax a $8 en Agroveterinaria El Campo, RUC 8-345-678, para Darién</div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-avatar bot">🤖</div>
+            <div class="chat-bubble">
+              Listo Pedro ✓<br>
+              <strong>Gasto registrado</strong> en Darién<br>
+              <small>Vacuna ántrax · 12u × $8 = $96 · RUC 8-345-678</small>
+            </div>
+          </div>
+          <div class="chat-msg user">
+            <div class="chat-avatar user">P</div>
+            <div class="chat-bubble">📎 factura_alimento.jpg</div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-avatar bot">🤖</div>
+            <div class="chat-bubble">
+              <strong>Factura procesada</strong><br>
+              Aliansa S.A. · 200kg melaza · $340<br>
+              <small>¿La asigno a El Tecal o Bebito?</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module reveal">
+        <div class="module-icon">🏠</div>
+        <h3>Inicio multi-finca</h3>
+        <p>Un dashboard que muestra todas tus fincas en un solo vistazo, con el margen de cada una en tiempo real.</p>
+        <ul>
+          <li>KPIs vivos: animales, gastos, ingresos, alertas</li>
+          <li>Margen por finca con código de color</li>
+          <li>Comparativos mes a mes</li>
+        </ul>
+      </div>
+
+      <div class="module reveal">
+        <div class="module-icon">🐄</div>
+        <h3>Hato inteligente</h3>
+        <p>Cada animal con historial completo: peso, vacunación, alimentación, reproducción y trazabilidad de liquidación.</p>
+        <ul>
+          <li>Categorías: ceba, cría, lechero, caballos</li>
+          <li>Historia médica y reproductiva por res</li>
+          <li>Liquidación con cálculo automático</li>
+        </ul>
+      </div>
+
+      <div class="module reveal">
+        <div class="module-icon">💸</div>
+        <h3>Gastos & P&L</h3>
+        <p>Estado de resultados real por finca, no a fin de año — todos los días, sin esperar al contador.</p>
+        <ul>
+          <li>Categorización automática por IA</li>
+          <li>Aprobación de gastos por dueño</li>
+          <li>Modelos: propio · a medias · alquiler</li>
+        </ul>
+      </div>
+
+      <div class="module reveal">
+        <div class="module-icon">🔔</div>
+        <h3>Alertas proactivas</h3>
+        <p>El sistema te avisa antes de que sea problema. Vacunaciones, stock crítico, reses sin peso, gastos pendientes.</p>
+        <ul>
+          <li>Protocolos sanitarios automáticos</li>
+          <li>Stock mínimo por insumo</li>
+          <li>Recordatorios por canal preferido</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ DIFERENCIADOR ═══════════════════════ -->
+<section class="differ" id="diferenciador">
+  <div class="container">
+    <div class="differ-grid">
+
+      <div class="differ-text reveal">
+        <div class="eyebrow">Por qué GanaderoAI</div>
+        <h2>El campo no se administra desde un escritorio.</h2>
+        <p>Un capataz en el potrero no va a abrir una hoja de cálculo. Pero sí escribe en WhatsApp. Sí saca foto de la factura. Sí dice "vacunamos 14 reses en Toño" — y eso es exactamente lo que GanaderoAI convierte en datos.</p>
+        <p>Es la diferencia entre un sistema que requiere disciplina y un sistema que se adapta a tu día.</p>
+
+        <div class="differ-stats">
+          <div class="stat">
+            <div class="stat-num">85%</div>
+            <div class="stat-label">menos tiempo en registros</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">trazabilidad por finca</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">5×</div>
+            <div class="stat-label">visibilidad de margen</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">0</div>
+            <div class="stat-label">capacitación técnica</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="differ-visual reveal">
+        <div class="eyebrow" style="color:var(--text-3);margin-bottom:8px">Vista real del producto</div>
+        <h4>Margen por finca · Abril</h4>
+        <div class="sub">5 fincas · vista comparativa</div>
+        <div class="bar-row">
+          <div class="bar-label">El Tecal</div>
+          <div class="bar-track"><div class="bar-fill" data-w="78" style="width:0"></div></div>
+          <div class="bar-val">78%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Darién</div>
+          <div class="bar-track"><div class="bar-fill" data-w="62" style="width:0"></div></div>
+          <div class="bar-val">62%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Bebito</div>
+          <div class="bar-track"><div class="bar-fill" data-w="55" style="width:0"></div></div>
+          <div class="bar-val">55%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Tortí</div>
+          <div class="bar-track"><div class="bar-fill amber" data-w="44" style="width:0"></div></div>
+          <div class="bar-val">44%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Toño</div>
+          <div class="bar-track"><div class="bar-fill red" data-w="31" style="width:0"></div></div>
+          <div class="bar-val">31%</div>
+        </div>
+        <div class="differ-insight">
+          Insight inmediato: <strong>Toño está perdiendo plata.</strong> Antes de GanaderoAI, esto se sabía a fin de año.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ COMO FUNCIONA ═══════════════════════ -->
+<section class="how" id="como">
+  <div class="container">
+    <div class="product-header reveal">
+      <div class="eyebrow">Cómo funciona</div>
+      <h2>De cero a finca digital en un día.</h2>
+      <p>Sin instalaciones, sin migración de datos compleja, sin capacitar al capataz. Empieza hablando.</p>
+    </div>
+
+    <div class="how-grid">
+      <div class="step reveal">
+        <div class="step-num">PASO 01</div>
+        <h3>Registra tus fincas</h3>
+        <p>Cuéntale a la IA cuántas fincas tienes, qué tipo (potrero, estabulación, cría) y bajo qué modelo (propio, a medias). Listo en 5 minutos.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">PASO 02</div>
+        <h3>Conecta tu equipo</h3>
+        <p>Cada capataz, dueño o socio entra con su WhatsApp. El sistema separa automáticamente quién registra qué, y bajo qué nivel de aprobación.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">PASO 03</div>
+        <h3>Habla. La IA hace el resto</h3>
+        <p>Cada gasto, cada vacuna, cada nueva res que entra al hato — se registra hablando o subiendo foto. La rentabilidad por finca aparece sola.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ AUDIENCIA ═══════════════════════ -->
+<section class="audience" id="audiencia">
+  <div class="container">
+    <div class="audience-header reveal">
+      <div class="eyebrow">Para quién es</div>
+      <h2>No estamos hablando de cualquier ganadero.</h2>
+      <p>GanaderoAI fue diseñado con productores reales que mueven ganado en Latinoamérica — donde las fincas son varias, los modelos son mixtos y las decisiones se toman en el campo, no en una oficina.</p>
+    </div>
+
+    <div class="audience-grid">
+      <div class="aud-card reveal">
+        <div class="aud-num">01</div>
+        <h4>Productor multi-finca</h4>
+        <p>Tienes entre 2 y 10 fincas distribuidas. Necesitas saber qué finca rinde y cuál pierde, en tiempo real.</p>
+      </div>
+      <div class="aud-card reveal">
+        <div class="aud-num">02</div>
+        <h4>Sociedades a medias</h4>
+        <p>Compartes ganado con un socio o capataz. Necesitas trazabilidad transparente de gastos, ingresos y reparto.</p>
+      </div>
+      <div class="aud-card reveal">
+        <div class="aud-num">03</div>
+        <h4>Cooperativas ganaderas</h4>
+        <p>Agrupas a varios productores. Necesitas reportes consolidados sin pedirle Excel a nadie.</p>
+      </div>
+      <div class="aud-card reveal">
+        <div class="aud-num">04</div>
+        <h4>Agroindustria</h4>
+        <p>Manejas hatos grandes con múltiples capataces. Necesitas un sistema que escale sin meter a todos a una capacitación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CTA ═══════════════════════ -->
+<section class="cta" id="demo">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="eyebrow">Empieza hoy</div>
+      <h2>Tu próxima finca rentable empieza con un mensaje.</h2>
+      <div class="cta-tagline">Smarter Livestock. Stronger Farms.</div>
+      <p class="lead">Agenda una demo de 30 minutos. Te mostramos GanaderoAI con tus propios números y te dejamos una semana de prueba sin tarjeta de crédito.</p>
+
+      <form class="cta-form" onsubmit="handleDemo(event)">
+        <input type="email" class="cta-input" placeholder="tu@email.com" required>
+        <button type="submit" class="btn btn-primary">
+          Solicitar demo
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+      <div class="cta-note">
+        O escríbenos directo a <strong>info@henkancx.com</strong> · WhatsApp +507 6467 1392
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 1024 1024" fill="none" aria-hidden="true">
+            <g fill="currentColor">
+              <path d="M 245 230 L 285 230 L 360 415 L 360 380 Z"/>
+              <path d="M 360 230 L 540 230 L 540 540 L 470 540 L 470 600 L 540 600 L 540 690 Q 540 760 470 760 L 420 760 Q 360 760 360 700 Z"/>
+              <path d="M 540 540 Q 590 540 605 510 L 645 470 L 695 580 L 770 360 L 800 305" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="800" cy="305" r="42"/>
+            </g>
+          </svg>
+          GanaderoAI
+        </div>
+        <div class="footer-tagline">Data. Decisions. Performance.</div>
+        <p>Plataforma inteligente de gestión ganadera. Multi-finca, multi-modelo, sin formularios.</p>
+      </div>
+
+      <div>
+        <h5>Producto</h5>
+        <ul>
+          <li><a href="#producto">Módulos</a></li>
+          <li><a href="#diferenciador">Por qué GanaderoAI</a></li>
+          <li><a href="#como">Cómo funciona</a></li>
+          <li><a href="#audiencia">Para quién es</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="https://henkancx.com" target="_blank" rel="noopener">HenkanCX</a></li>
+          <li><a href="#demo">Solicitar demo</a></li>
+          <li><a href="mailto:info@henkancx.com">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Contacto</h5>
+        <ul>
+          <li>Andrea Nava</li>
+          <li><a href="mailto:info@henkancx.com">info@henkancx.com</a></li>
+          <li>+507 6467 1392</li>
+          <li>Ciudad de Panamá</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 GanaderoAI · Todos los derechos reservados</div>
+      <div class="powered">
+        Powered by <a href="https://henkancx.com" target="_blank" rel="noopener">HenkanCX</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const bars = entry.target.querySelectorAll('.bar-fill[data-w]');
+      bars.forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 200);
+      });
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function handleDemo(e){
+  e.preventDefault();
+  const email = e.target.querySelector('input').value;
+  const btn = e.target.querySelector('button');
+  btn.innerHTML = '✓ Solicitud enviada';
+  btn.style.background = 'var(--ok)';
+  setTimeout(() => {
+    alert('¡Gracias! Andrea Nava te contactará en menos de 24h al correo: ' + email);
+  }, 300);
+}
+</script>
+
+</body>
+</html>
