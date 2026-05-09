@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2C2416">
+<title>Blog GanaderoAI — Recursos para productores ganaderos en Centroamérica</title>
+<meta name="description" content="Artículos, guías y casos prácticos sobre gestión ganadera, rentabilidad por finca, trazabilidad de hato y digitalización para productores en Panamá, Costa Rica y Guatemala.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="HenkanCX">
+<meta name="geo.region" content="PA">
+<link rel="canonical" href="https://ganaderoai.com/blog/">
+<link rel="alternate" hreflang="es" href="https://ganaderoai.com/blog/">
+<link rel="alternate" hreflang="x-default" href="https://ganaderoai.com/blog/">
+
+<link rel="icon" type="image/png" href="/logo-ganaderoia.png">
+<link rel="apple-touch-icon" href="/logo-ganaderoia.png">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blog GanaderoAI — Recursos para productores ganaderos en Centroamérica">
+<meta property="og:description" content="Artículos, guías y casos prácticos sobre gestión ganadera, rentabilidad por finca, trazabilidad de hato y digitalización para productores en Panamá, Costa Rica y Guatemala.">
+<meta property="og:url" content="https://ganaderoai.com/blog/">
+<meta property="og:site_name" content="GanaderoAI">
+<meta property="og:locale" content="es_LA">
+<meta property="og:image" content="https://ganaderoai.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog GanaderoAI — Recursos para productores ganaderos en Centroamérica">
+<meta name="twitter:description" content="Artículos, guías y casos prácticos sobre gestión ganadera, rentabilidad por finca, trazabilidad de hato y digitalización para productores en Panamá, Costa Rica y Guatemala.">
+<meta name="twitter:image" content="https://ganaderoai.com/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+img,svg{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+
+:root{
+  --sage:#6B7D5A;--soil:#2C2416;--cloud:#EEF0EB;--blue:#3A68A4;--amber:#BF7A2A;
+  --sage-light:#E8EDE3;--sage-deep:#566649;--soil-soft:#4A3F2D;--cream:#FAF8F1;--paper:#FFFFFF;
+  --border:#D8DBD2;--text:#2C2416;--text-2:#4A5240;--text-3:#7A816F;
+  --display:'Inter',-apple-system,sans-serif;
+  --body:'Source Sans 3',-apple-system,sans-serif;
+  --r-sm:4px;--r:6px;
+}
+
+html,body{background:var(--cream);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;letter-spacing:-.02em;color:var(--soil);line-height:1.2}
+
+.container{width:100%;max-width:880px;margin:0 auto;padding:0 24px}
+@media (min-width:768px){.container{padding:0 40px}}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:100;background:rgba(250,248,241,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1240px;margin:0 auto;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:700;font-size:18px;color:var(--soil)}
+.nav-logo img{width:34px;height:34px;object-fit:contain}
+.nav-links{display:none;gap:36px;font-family:var(--display);font-weight:500;font-size:14px}
+@media (min-width:760px){.nav-links{display:flex}}
+.nav-links a{color:var(--text-2)}
+.nav-links a:hover{color:var(--soil)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:14px;padding:10px 18px;border-radius:var(--r-sm);background:var(--soil);color:var(--cream);transition:background .15s}
+.btn:hover{background:#1A1410}
+.btn-wa-icon{width:16px;height:16px}
+
+/* Article */
+article{padding:48px 0 80px}
+.eyebrow{font-family:var(--display);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--sage-deep);margin-bottom:14px}
+article h1{font-size:clamp(32px,4.5vw,48px);margin-bottom:18px;font-weight:800}
+.article-meta{font-family:var(--display);font-size:13px;color:var(--text-3);margin-bottom:36px;font-weight:500}
+.article-meta span{display:inline-flex;align-items:center;gap:6px}
+.article-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--text-3);margin:0 10px;display:inline-block;vertical-align:middle}
+
+article p{font-size:18px;color:var(--text-2);margin-bottom:22px;line-height:1.7}
+article h2{font-size:28px;margin:48px 0 16px;font-weight:700}
+article h3{font-size:21px;margin:32px 0 12px;font-weight:700}
+article ul,article ol{margin:0 0 22px 22px}
+article li{font-size:18px;color:var(--text-2);margin-bottom:8px;line-height:1.65}
+article strong{color:var(--soil);font-weight:700}
+article blockquote{border-left:3px solid var(--sage);padding:8px 0 8px 20px;margin:24px 0;font-size:19px;color:var(--text);font-style:italic}
+
+.post-cta{
+  background:var(--sage-light);
+  border-radius:var(--r);
+  padding:32px 28px;
+  margin:48px 0 0;
+  text-align:center;
+}
+.post-cta h3{margin-bottom:10px;font-size:22px}
+.post-cta p{margin-bottom:18px}
+.post-cta .btn{background:var(--amber)}
+.post-cta .btn:hover{background:#A86A24}
+
+/* Footer */
+.footer{background:var(--soil);color:rgba(238,240,235,.65);padding:48px 0;font-size:14px;text-align:center}
+.footer a{color:#CB6CE6}
+.footer a:hover{opacity:.75}
+
+/* Blog index list */
+.posts{display:flex;flex-direction:column;gap:0;margin-top:32px;border-top:1px solid var(--border)}
+.post-card{display:block;padding:28px 0;border-bottom:1px solid var(--border);transition:transform .15s}
+.post-card:hover{transform:translateX(4px)}
+.post-card .eyebrow{margin-bottom:8px}
+.post-card h2{font-size:24px;margin-bottom:8px}
+.post-card p{font-size:16px;color:var(--text-2);margin-bottom:0}
+
+.intro{font-size:18px;color:var(--text-2);max-width:640px;margin-bottom:8px;line-height:1.55}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/logo-ganaderoia.png" alt="GanaderoAI logo">
+      GanaderoAI
+    </a>
+    <div class="nav-links">
+      <a href="/#producto">Producto</a>
+      <a href="/#diferenciador">Por qué</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#audiencia">Para quién</a>
+    </div>
+    <a href="https://wa.me/50764671392?text=Hola%20Andrea%2C%20me%20interesa%20GanaderoAI.%20%C2%BFPodemos%20coordinar%20una%20demo%3F" target="_blank" rel="noopener" class="btn">Solicitar demo</a>
+  </div>
+</nav>
+
+<article>
+  <div class="container">
+    <div class="eyebrow">Blog GanaderoAI</div>
+    <h1>Recursos para productores ganaderos.</h1>
+    <p class="intro">Guías prácticas, ejemplos reales y herramientas para tomar mejores decisiones en tu finca. Sin tecnicismos, sin teoría — solo lo que mueve la aguja en el campo.</p>
+
+    <div class="posts">
+      <a href="/blog/como-calcular-margen-real-finca-ganadera/" class="post-card">
+        <div class="eyebrow">Rentabilidad</div>
+        <h2>Cómo calcular el margen real de una finca ganadera</h2>
+        <p>La diferencia entre lo que crees que ganas y lo que realmente queda en el bolsillo. Una guía paso a paso con ejemplos reales de productores en Panamá y Costa Rica.</p>
+      </a>
+      <a href="/blog/excel-vs-software-ganadero/" class="post-card">
+        <div class="eyebrow">Digitalización</div>
+        <h2>Excel vs software ganadero: ¿cuándo da el salto?</h2>
+        <p>Si manejas más de 2 fincas o más de 50 cabezas, Excel te está costando dinero. Te explicamos por qué — y qué buscar al elegir un sistema digital.</p>
+      </a>
+      <a href="/blog/trazabilidad-ganadera-whatsapp/" class="post-card">
+        <div class="eyebrow">Trazabilidad</div>
+        <h2>Trazabilidad ganadera por WhatsApp: el método que sí adopta el capataz</h2>
+        <p>Por qué los sistemas de trazabilidad fracasan en el campo y cómo WhatsApp + IA están cambiando la regla del juego en Centroamérica.</p>
+      </a>
+    </div>
+  </div>
+</article>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 <strong style="color:var(--cream)">GanaderoAI</strong> · Smarter Livestock. Stronger Farms.</p>
+    <p style="margin-top:8px;font-size:12px">Powered by <a href="https://henkancx.com" target="_blank" rel="noopener">HenkanCX</a></p>
+  </div>
+</footer>
+</body>
+</html>

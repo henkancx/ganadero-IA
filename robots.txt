@@ -1,0 +1,12 @@
+# GanaderoAI — robots.txt
+# https://ganaderoai.com
+
+User-agent: *
+Allow: /
+Disallow: /assets/private/
+
+# Sitemap
+Sitemap: https://ganaderoai.com/sitemap.xml
+
+# Crawl-friendly delay
+Crawl-delay: 1
